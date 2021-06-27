@@ -13,10 +13,17 @@ const resolverFn = async (
     uglyPassword = await bcrypt.hash(newPassword, 10);
   }
 
-  const { filename, createReadStream } = await avatar;
-  const readStream = createReadStream();
-  const writeStream = createWriteStream(process.cwd() + "/uploads/" + filename);
-  readStream.pipe(writeStream);
+  let avatarUrl = null;
+  if (avatar) {
+    const { filename, createReadStream } = await avatar;
+    const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`;
+    const readStream = createReadStream();
+    const writeStream = createWriteStream(
+      process.cwd() + "/uploads/" + newFilename
+    );
+    readStream.pipe(writeStream);
+    avatarUrl = `http://localhost:4000/static/${newFilename}`;
+  }
 
   const updatedUser = await client.user.update({
     where: {
@@ -27,8 +34,9 @@ const resolverFn = async (
       lastName,
       username,
       email,
-      bio,
       ...(uglyPassword && { password: uglyPassword }),
+      bio,
+      ...(avatarUrl && { avatar: avatarUrl }),
     },
   });
 
