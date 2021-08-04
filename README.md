@@ -5,6 +5,7 @@ Instaclone Backend.
 ## Overall
 
 - [ ] Pagination
+- [ ] 사진 삭제 시 하위 항목도 모두 삭제 6.16
 
 ## User
 
@@ -31,13 +32,13 @@ Instaclone Backend.
 - [x] See Photo Likes
 - [x] See Feed
 - [x] See Photo Comments
-- [ ] Is Mine (Delete Photo)
+- [x] Delete Photo
 
 ## Comments
 
 - [x] Comment on Photo
+- [x] Delete Comment
 - [ ] Edit Comment
-- [ ] Delete Comment (Is Mine)
 
 ## Extras
 
