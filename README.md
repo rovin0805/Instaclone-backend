@@ -43,6 +43,7 @@ Instaclone Backend.
 ## Refactor
 
 - [x] Mutation Responses
+- [x] ProtectedResolver
 
 ## Extras
 
