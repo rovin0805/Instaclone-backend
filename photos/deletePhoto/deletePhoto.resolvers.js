@@ -1,4 +1,5 @@
 import client from "../../client";
+import { delPhotoS3 } from "../../shared/shared.utils";
 import { protectedResolver } from "../../users/users.utils";
 
 export default {
@@ -10,6 +11,7 @@ export default {
         },
         select: {
           userId: true,
+          file: true,
         },
       });
 
@@ -29,6 +31,7 @@ export default {
             id,
           },
         });
+        delPhotoS3(photo.file, "uploads");
         return {
           ok: true,
         };
