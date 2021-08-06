@@ -52,7 +52,7 @@ Instaclone Backend.
 
 ## DMs
 
-- [ ] Create Room
-- [ ] Get Room
-- [ ] Send Message
+- [x] See Rooms
+- [ ] Send Message (Create Room)
+- [ ] See Room
 - [ ] Realtime Messages
