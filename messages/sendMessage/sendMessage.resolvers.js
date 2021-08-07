@@ -15,12 +15,32 @@ export default {
               id: true,
             },
           });
-          if (!usesr) {
+          if (!user) {
             return {
               ok: false,
               error: "This user does not exist.",
             };
           }
+
+          const isRoomExisted = await client.room.findFirst({
+            where: {
+              users: {
+                some: {
+                  id: userId,
+                },
+              },
+            },
+            select: {
+              id: true,
+            },
+          });
+          if (isRoomExisted) {
+            return {
+              ok: false,
+              error: "The Room already exists!",
+            };
+          }
+
           room = await client.room.create({
             data: {
               users: {
