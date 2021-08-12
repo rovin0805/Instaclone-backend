@@ -28,5 +28,6 @@ export default {
   },
   Message: {
     user: ({ id }) => client.message.findUnique({ where: { id } }).user(),
+    room: ({ id }) => client.message.findUnique({ where: { id } }).room(),
   },
 };
