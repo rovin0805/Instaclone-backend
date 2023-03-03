@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "nodemon --exec ts-node server.ts"
+    "dev": "nodemon --exec ts-node server.ts",
+    "migrate": "npx prisma migrate dev"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/rovin0805/Instaclone-backend#readme",
   "dependencies": {
+    "@prisma/client": "^4.10.1",
     "apollo-server": "^2.25.2",
     "graphql": "^15.8.0"
   },
