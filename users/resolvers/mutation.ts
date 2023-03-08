@@ -1,20 +1,11 @@
 import client from '@/client';
-import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql';
+import { Args, Mutation, Resolver } from 'type-graphql';
 import * as bcrypt from 'bcrypt';
 import CreateAccountArgs from '@/constants/types/users/createAccountArgs';
-import User from './user';
+import User from '../user';
 
 @Resolver(User)
-export default class UserResolvers {
-  @Query(() => User)
-  async seeProfile(@Arg('username') username: string): Promise<User | null> {
-    return client.user.findUnique({
-      where: {
-        username,
-      },
-    });
-  }
-
+export default class UserMutationResolver {
   @Mutation(() => User)
   async createAccount(
     @Args() args: CreateAccountArgs

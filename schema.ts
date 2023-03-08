@@ -13,7 +13,7 @@ import { buildSchema } from 'type-graphql';
 
 const getSchema = async () => {
   const schema = await buildSchema({
-    resolvers: [`${__dirname}/**/*.resolvers.ts`],
+    resolvers: [`${__dirname}/**/resolvers/index.ts`],
   });
   return schema;
 };
