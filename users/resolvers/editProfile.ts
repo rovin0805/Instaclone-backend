@@ -1,6 +1,6 @@
 import CommonResult from '@/types/common/result';
 import EditProfileArgs from '@/types/users/editProfileAgs';
-import { Args, Mutation, Resolver } from 'type-graphql';
+import { Args, Ctx, Mutation, Resolver } from 'type-graphql';
 import User from '../user';
 import client from '@/client';
 import * as bcrypt from 'bcrypt';
@@ -8,7 +8,10 @@ import * as bcrypt from 'bcrypt';
 @Resolver(User)
 export default class EditProfileResolver {
   @Mutation(() => CommonResult)
-  async editProfile(@Args() args: EditProfileArgs): Promise<CommonResult> {
+  async editProfile(
+    @Args() args: EditProfileArgs,
+    @Ctx('loggedInUser') loggedInUser: User
+  ): Promise<CommonResult> {
     const {
       firstName,
       lastName,
@@ -23,7 +26,7 @@ export default class EditProfileResolver {
     }
 
     const updatedUser = await client.user.update({
-      where: { id: 1 }, // TODO: check authentication
+      where: { id: loggedInUser?.id },
       data: {
         firstName,
         lastName,

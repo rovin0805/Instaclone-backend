@@ -5,7 +5,8 @@ export default {
   Mutation: {
     editProfile: async (
       _: any,
-      { firstName, lastName, username, email, password: newPassword }: any
+      { firstName, lastName, username, email, password: newPassword }: any,
+      { loggedInUser }: any
     ) => {
       let hashedPassword = null;
       if (newPassword) {
@@ -13,7 +14,7 @@ export default {
       }
 
       const updatedUser = await client.user.update({
-        where: { id: 1 }, // TODO: check authentication
+        where: { id: loggedInUser?.id },
         data: {
           firstName,
           lastName,

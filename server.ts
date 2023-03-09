@@ -1,3 +1,4 @@
+import { getUser } from './utils/getUser';
 import 'dotenv/config';
 import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server';
@@ -18,6 +19,9 @@ const server = async () => {
 
   const apolloServer = new ApolloServer({
     schema,
+    context: async ({ req }) => ({
+      loggedInUser: await getUser(req.headers.authorization),
+    }),
   });
 
   await apolloServer.listen();
