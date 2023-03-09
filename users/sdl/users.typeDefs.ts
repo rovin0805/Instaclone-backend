@@ -10,9 +10,11 @@ const typeDefs = gql`
     createdAt: String!
     updatedAt: String!
   }
+
   type Query {
     seeProfile(username: String!): User
   }
+
   type Mutation {
     createAccount(
       firstName: String!
@@ -21,6 +23,14 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): User
+
+    login(username: String!, password: String!): LoginResult
+  }
+
+  type LoginResult {
+    ok: Boolean!
+    token: String
+    error: String
   }
 `;
 

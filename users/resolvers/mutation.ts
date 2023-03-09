@@ -1,8 +1,10 @@
 import client from '@/client';
-import { Args, Mutation, Resolver } from 'type-graphql';
+import { Arg, Args, Mutation, Resolver } from 'type-graphql';
 import * as bcrypt from 'bcrypt';
 import CreateAccountArgs from '@/constants/types/users/createAccountArgs';
 import User from '../user';
+import * as jwt from 'jsonwebtoken';
+import LoginResult from '@/constants/types/users/loginResult';
 
 @Resolver(User)
 export default class UserMutationResolver {
@@ -38,5 +40,38 @@ export default class UserMutationResolver {
     } catch (error) {
       return error;
     }
+  }
+
+  @Mutation(() => LoginResult)
+  async login(
+    @Arg('username') username: string,
+    @Arg('password') password: string
+  ): Promise<LoginResult> {
+    const user = await client.user.findUnique({
+      where: { username },
+    });
+
+    if (!user) {
+      return {
+        ok: false,
+        error: 'User Not Found',
+      };
+    }
+
+    const isCorrectPassword = await bcrypt.compare(password, user.password);
+
+    if (!isCorrectPassword) {
+      return {
+        ok: false,
+        error: 'Incorrect Password',
+      };
+    }
+
+    const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY as string);
+
+    return {
+      ok: true,
+      token,
+    };
   }
 }
