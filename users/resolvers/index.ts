@@ -3,6 +3,7 @@ import User from '../user';
 import CreateAccountResolver from './createAccount';
 import LoginResolver from './login';
 import seeProfileResolver from './seeProfile';
+import EditProfileResolver from './editProfile';
 
 @Resolver(User)
 export default class UserResolver {
@@ -12,4 +13,5 @@ export default class UserResolver {
   // mutation
   createAccountResolver = new CreateAccountResolver();
   loginResolver = new LoginResolver();
+  editProfileResolver = new EditProfileResolver();
 }
