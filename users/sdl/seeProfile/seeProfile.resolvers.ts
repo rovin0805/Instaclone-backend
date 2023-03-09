@@ -1,6 +1,6 @@
 import client from '@/client';
 
-const UserQuery = {
+export default {
   Query: {
     seeProfile: (_: any, { username }: any) =>
       client.user.findUnique({
@@ -10,5 +10,3 @@ const UserQuery = {
       }),
   },
 };
-
-export default UserQuery;

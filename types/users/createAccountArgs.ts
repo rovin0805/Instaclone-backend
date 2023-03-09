@@ -7,7 +7,7 @@ export default class CreateAccountArgs {
   firstName: string;
 
   @Field(() => String, { nullable: true })
-  lastName?: string | null;
+  lastName?: string;
 
   @Field()
   username: string;

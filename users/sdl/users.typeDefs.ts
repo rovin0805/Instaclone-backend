@@ -10,28 +10,6 @@ const typeDefs = gql`
     createdAt: String!
     updatedAt: String!
   }
-
-  type Query {
-    seeProfile(username: String!): User
-  }
-
-  type Mutation {
-    createAccount(
-      firstName: String!
-      lastName: String
-      username: String!
-      email: String!
-      password: String!
-    ): User
-
-    login(username: String!, password: String!): LoginResult
-  }
-
-  type LoginResult {
-    ok: Boolean!
-    token: String
-    error: String
-  }
 `;
 
 export default typeDefs;
