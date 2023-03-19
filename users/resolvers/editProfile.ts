@@ -1,6 +1,7 @@
+import { protectedResolver } from '@/utils/protectResolver';
 import CommonResult from '@/types/common/result';
 import EditProfileArgs from '@/types/users/editProfileAgs';
-import { Args, Ctx, Mutation, Resolver } from 'type-graphql';
+import { Args, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql';
 import User from '../user';
 import client from '@/client';
 import * as bcrypt from 'bcrypt';
@@ -8,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 @Resolver(User)
 export default class EditProfileResolver {
   @Mutation(() => CommonResult)
+  @UseMiddleware(protectedResolver)
   async editProfile(
     @Args() args: EditProfileArgs,
     @Ctx('loggedInUser') loggedInUser: User

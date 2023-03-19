@@ -1,8 +1,8 @@
-import { getUser } from './utils/getUser';
 import 'dotenv/config';
 import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server';
 import getSchema from './schema';
+import { getUser } from './utils/getUser';
 
 // const server = new ApolloServer({
 //   schema,
