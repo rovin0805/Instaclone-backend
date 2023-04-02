@@ -20,7 +20,13 @@ export default class EditProfileResolver {
       username,
       email,
       password: newPassword,
+      bio,
+      avatar,
     } = args;
+    console.log(
+      '🚀 ~ file: editProfile.ts:26 ~ EditProfileResolver ~ avatar:',
+      avatar
+    );
 
     let hashedPassword = null;
     if (newPassword) {
@@ -34,6 +40,7 @@ export default class EditProfileResolver {
         lastName,
         username,
         email,
+        bio,
         ...(hashedPassword && { password: hashedPassword }),
       },
     });

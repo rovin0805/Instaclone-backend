@@ -20,6 +20,12 @@ export default class User {
   @IsEmail()
   email: string;
 
+  @Field(() => String, { nullable: true })
+  bio?: string | null;
+
+  @Field(() => String, { nullable: true })
+  avatar?: string | null;
+
   @Field()
   @IsDate()
   createdAt: Date;

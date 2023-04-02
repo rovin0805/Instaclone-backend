@@ -7,6 +7,8 @@ const typeDefs = gql`
     lastName: String
     username: String!
     email: String!
+    bio: String
+    avatar: String
     createdAt: String!
     updatedAt: String!
   }

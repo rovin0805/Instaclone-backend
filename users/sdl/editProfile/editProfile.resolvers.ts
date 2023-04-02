@@ -4,7 +4,15 @@ import * as bcrypt from 'bcrypt';
 
 const resolverFn = async (
   _: any,
-  { firstName, lastName, username, email, password: newPassword }: any,
+  {
+    firstName,
+    lastName,
+    username,
+    email,
+    password: newPassword,
+    bio,
+    avatar,
+  }: any,
   { loggedInUser }: any
 ) => {
   let hashedPassword = null;
@@ -19,6 +27,7 @@ const resolverFn = async (
       lastName,
       username,
       email,
+      bio,
       ...(hashedPassword && { password: hashedPassword }),
     },
   });
