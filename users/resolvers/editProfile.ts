@@ -5,6 +5,7 @@ import { Args, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql';
 import User from '../user';
 import client from '@/client';
 import * as bcrypt from 'bcrypt';
+import { createWriteStream } from 'fs';
 
 @Resolver(User)
 export default class EditProfileResolver {
@@ -23,10 +24,19 @@ export default class EditProfileResolver {
       bio,
       avatar,
     } = args;
-    console.log(
-      '🚀 ~ file: editProfile.ts:26 ~ EditProfileResolver ~ avatar:',
-      avatar
-    );
+
+    // <-- temp code, not for prod! : how to save the file w/ node
+    let avatarUrl = null;
+    if (avatar) {
+      const { filename, createReadStream } = await avatar;
+      const newFileName = loggedInUser.id + Date.now() + filename;
+      const readStream = createReadStream();
+      const writeStream = createWriteStream(
+        process.cwd() + '/uploads/' + newFileName
+      );
+      readStream.pipe(writeStream);
+      avatarUrl = `http://localhost:4000/static/${newFileName}`;
+    }
 
     let hashedPassword = null;
     if (newPassword) {
@@ -42,6 +52,7 @@ export default class EditProfileResolver {
         email,
         bio,
         ...(hashedPassword && { password: hashedPassword }),
+        ...(avatar && { avatar: avatarUrl }),
       },
     });
 

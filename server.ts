@@ -36,6 +36,7 @@ const startServer = async () => {
 
   app.use(graphqlUploadExpress());
   app.use(logger('dev'));
+  app.use('/static', express.static('uploads'));
 
   apolloServer.applyMiddleware({ app });
 
