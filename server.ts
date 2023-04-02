@@ -5,6 +5,7 @@ import getSchema from './schema';
 import { getUser } from './utils/getUser';
 import express from 'express';
 import { graphqlUploadExpress } from 'graphql-upload';
+import logger from 'morgan';
 
 // const server = new ApolloServer({
 //   schema,
@@ -32,10 +33,15 @@ const startServer = async () => {
   await apolloServer.start();
 
   const app = express();
+
   app.use(graphqlUploadExpress());
+  app.use(logger('dev'));
+
   apolloServer.applyMiddleware({ app });
 
-  await new Promise<void>((func) => app.listen({ port: 4000 }, func));
+  await new Promise<void>((func) =>
+    app.listen({ port: process.env.PORT }, func)
+  );
 
   console.log(`✅ Server is listening : http://localhost:${process.env.PORT}`);
 };
