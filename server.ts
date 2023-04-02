@@ -1,8 +1,10 @@
 import 'dotenv/config';
 import 'reflect-metadata';
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from 'apollo-server-express';
 import getSchema from './schema';
 import { getUser } from './utils/getUser';
+import express from 'express';
+import { graphqlUploadExpress } from 'graphql-upload';
 
 // const server = new ApolloServer({
 //   schema,
@@ -14,7 +16,7 @@ import { getUser } from './utils/getUser';
 //     console.log(`✅ Server is listening : http://localhost:${process.env.PORT}`)
 //   );
 
-const server = async () => {
+const startServer = async () => {
   const schema = await getSchema();
 
   const apolloServer = new ApolloServer({
@@ -22,10 +24,20 @@ const server = async () => {
     context: async ({ req }) => ({
       loggedInUser: await getUser(req.headers.authorization),
     }),
+    // csrfPrevention: true,
+    // cache: 'bounded',
+    // plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
   });
 
-  await apolloServer.listen();
+  await apolloServer.start();
+
+  const app = express();
+  app.use(graphqlUploadExpress());
+  apolloServer.applyMiddleware({ app });
+
+  await new Promise<void>((func) => app.listen({ port: 4000 }, func));
+
   console.log(`✅ Server is listening : http://localhost:${process.env.PORT}`);
 };
 
-server();
+startServer();
