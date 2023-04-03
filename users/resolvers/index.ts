@@ -5,6 +5,7 @@ import LoginResolver from './login';
 import SeeProfileResolver from './seeProfile';
 import EditProfileResolver from './editProfile';
 import FollowUserResolvers from './followUser';
+import UnFollowUserResolvers from './unfollowUser';
 
 @Resolver(User)
 export default class UserResolver {
@@ -16,4 +17,5 @@ export default class UserResolver {
   loginResolver = new LoginResolver();
   editProfileResolver = new EditProfileResolver();
   followUserResolvers = new FollowUserResolvers();
+  unfollowUserResolvers = new UnFollowUserResolvers();
 }
