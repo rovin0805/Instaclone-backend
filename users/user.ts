@@ -1,5 +1,6 @@
 import { IsDate, IsEmail, IsInt } from 'class-validator';
 import { Field, ID, ObjectType } from 'type-graphql';
+import { User as PrismaUser } from '@prisma/client';
 
 @ObjectType()
 export default class User {
@@ -33,4 +34,10 @@ export default class User {
   @Field()
   @IsDate()
   updatedAt: Date;
+
+  @Field(() => [User])
+  following: PrismaUser[];
+
+  @Field(() => [User])
+  followers: PrismaUser[];
 }

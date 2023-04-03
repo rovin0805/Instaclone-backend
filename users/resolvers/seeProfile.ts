@@ -10,6 +10,10 @@ export default class UserQueryResolver {
       where: {
         username,
       },
+      include: {
+        followers: true,
+        following: true,
+      },
     });
   }
 }
