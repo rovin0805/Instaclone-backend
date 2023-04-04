@@ -11,3 +11,12 @@ export class SeeFollowersResult extends CommonResult {
   @Field(() => Number, { nullable: true })
   totalPages?: number;
 }
+
+@ObjectType()
+export class SeeFollowingResult extends CommonResult {
+  @Field(() => [User], { nullable: true })
+  following?: PrismaUser[];
+
+  @Field(() => Number, { nullable: true })
+  totalPages?: number;
+}

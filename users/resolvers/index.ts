@@ -7,6 +7,7 @@ import EditProfileResolver from './editProfile';
 import FollowUserResolvers from './followUser';
 import UnFollowUserResolvers from './unfollowUser';
 import SeeFollowersResolver from './seeFollowers';
+import SeeFollowingResolver from './seeFollowing';
 
 @Resolver(User)
 export default class UserResolver {
@@ -20,4 +21,5 @@ export default class UserResolver {
   followUserResolvers = new FollowUserResolvers();
   unfollowUserResolvers = new UnFollowUserResolvers();
   seeFollowersResolver = new SeeFollowersResolver();
+  seeFollowingResolver = new SeeFollowingResolver();
 }
