@@ -68,7 +68,7 @@ export default class User {
   @Field(() => Boolean)
   @IsBoolean()
   isMe(@Root() root: User, @Ctx('loggedInUser') loggedInUser: User): boolean {
-    return loggedInUser && root.id === loggedInUser.id;
+    return !!loggedInUser && root.id === loggedInUser.id;
   }
 
   @Field(() => Boolean)
