@@ -13,6 +13,10 @@ const typeDefs = gql`
     updatedAt: String!
     following: [User]
     followers: [User]
+    totalFollowing: Int!
+    totalFollowers: Int!
+    isMe: Boolean!
+    isFollowing: Boolean!
   }
 `;
 

@@ -1,6 +1,6 @@
-import { IsDate, IsEmail, IsInt } from 'class-validator';
-import { Field, ID, ObjectType } from 'type-graphql';
-import { User as PrismaUser } from '@prisma/client';
+import { IsBoolean, IsDate, IsEmail, IsInt } from 'class-validator';
+import { Ctx, Field, ID, Int, ObjectType, Root } from 'type-graphql';
+import client from '@/client';
 
 @ObjectType()
 export default class User {
@@ -36,8 +36,60 @@ export default class User {
   updatedAt: Date;
 
   @Field(() => [User])
-  following: PrismaUser[];
+  following: User[];
 
   @Field(() => [User])
-  followers: PrismaUser[];
+  followers: User[];
+
+  @Field(() => Int)
+  @IsInt()
+  totalFollowing(@Root() root: User): Promise<number> {
+    return client.user.count({
+      where: {
+        followers: {
+          some: { id: root.id },
+        },
+      },
+    });
+  }
+
+  @Field(() => Int)
+  @IsInt()
+  totalFollowers(@Root() root: User): Promise<number> {
+    return client.user.count({
+      where: {
+        following: {
+          some: { id: root.id },
+        },
+      },
+    });
+  }
+
+  @Field(() => Boolean)
+  @IsBoolean()
+  isMe(@Root() root: User, @Ctx('loggedInUser') loggedInUser: User): boolean {
+    return loggedInUser && root.id === loggedInUser.id;
+  }
+
+  @Field(() => Boolean)
+  @IsBoolean()
+  async isFollowing(
+    @Root() root: User,
+    @Ctx('loggedInUser') loggedInUser: User
+  ): Promise<boolean> {
+    if (!loggedInUser) {
+      return false;
+    }
+    const exists = await client.user.count({
+      where: {
+        username: loggedInUser.username,
+        following: {
+          some: {
+            id: root.id,
+          },
+        },
+      },
+    });
+    return !!exists;
+  }
 }
