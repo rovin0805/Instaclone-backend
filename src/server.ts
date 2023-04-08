@@ -6,6 +6,7 @@ import { getUser } from './utils/getUser';
 import express from 'express';
 import { graphqlUploadExpress } from 'graphql-upload';
 import logger from 'morgan';
+import client from './client';
 
 // const server = new ApolloServer({
 //   schema,
@@ -24,6 +25,7 @@ const startServer = async () => {
     schema,
     context: async ({ req }) => ({
       loggedInUser: await getUser(req.headers.authorization),
+      client,
     }),
     // csrfPrevention: true,
     // cache: 'bounded',

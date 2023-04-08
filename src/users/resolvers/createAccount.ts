@@ -1,14 +1,17 @@
-import client from '@/client';
-import { Args, Mutation, Resolver } from 'type-graphql';
+import { Args, Ctx, Mutation, Resolver } from 'type-graphql';
 import * as bcrypt from 'bcrypt';
 import User from '../user';
 import CreateAccountArgs from '@/types/users/createAccountArgs';
 import CommonResult from '@/types/common/result';
+import { PrismaClient } from '@prisma/client';
 
 @Resolver(User)
 export default class CreateAccountResolver {
   @Mutation(() => CommonResult)
-  async createAccount(@Args() args: CreateAccountArgs) {
+  async createAccount(
+    @Args() args: CreateAccountArgs,
+    @Ctx('client') client: PrismaClient
+  ) {
     try {
       const { firstName, lastName, username, email, password } = args;
 

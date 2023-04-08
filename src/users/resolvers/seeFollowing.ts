@@ -1,12 +1,13 @@
-import client from '@/client';
 import { SeeFollowingResult } from '@/types/users/seeFollowResult';
-import { Arg, Int, Query, Resolver } from 'type-graphql';
+import { PrismaClient } from '@prisma/client';
+import { Arg, Ctx, Int, Query, Resolver } from 'type-graphql';
 import User from '../user';
 
 @Resolver(User)
 export default class SeeFollowingResolver {
   @Query(() => SeeFollowingResult)
   async seeFollowing(
+    @Ctx('client') client: PrismaClient,
     @Arg('username') username: string,
     @Arg('lastId', () => Int, { nullable: true }) lastId?: number
   ) {

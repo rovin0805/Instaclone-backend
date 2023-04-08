@@ -3,9 +3,10 @@ import CommonResult from '@/types/common/result';
 import EditProfileArgs from '@/types/users/editProfileAgs';
 import { Args, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql';
 import User from '../user';
-import client from '@/client';
 import * as bcrypt from 'bcrypt';
 import { createWriteStream } from 'fs';
+import { PrismaClient } from '@prisma/client';
+import ContextType from '@/types/common/contextType';
 
 @Resolver(User)
 export default class EditProfileResolver {
@@ -13,8 +14,9 @@ export default class EditProfileResolver {
   @UseMiddleware(protectedResolver)
   async editProfile(
     @Args() args: EditProfileArgs,
-    @Ctx('loggedInUser') loggedInUser: User
+    @Ctx() context: ContextType
   ) {
+    const { loggedInUser, client } = context;
     const {
       firstName,
       lastName,

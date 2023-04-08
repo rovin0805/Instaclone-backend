@@ -1,6 +1,6 @@
-import client from '@/client';
 import { SeeFollowersResult } from '@/types/users/seeFollowResult';
-import { Arg, Int, Query, Resolver } from 'type-graphql';
+import { PrismaClient } from '@prisma/client';
+import { Arg, Ctx, Int, Query, Resolver } from 'type-graphql';
 import User from '../user';
 
 @Resolver(User)
@@ -8,7 +8,8 @@ export default class SeeFollowersResolver {
   @Query(() => SeeFollowersResult)
   async seeFollowers(
     @Arg('username') username: string,
-    @Arg('page', () => Int) page: number
+    @Arg('page', () => Int) page: number,
+    @Ctx('client') client: PrismaClient
   ) {
     try {
       const ok = await client.user.findUnique({

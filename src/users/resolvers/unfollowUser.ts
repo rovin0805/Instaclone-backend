@@ -1,4 +1,4 @@
-import client from '@/client';
+import ContextType from '@/types/common/contextType';
 import CommonResult from '@/types/common/result';
 import { protectedResolver } from '@/utils/protectResolver';
 import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql';
@@ -10,9 +10,10 @@ export default class UnfollowUserResolver {
   @UseMiddleware(protectedResolver)
   async unfollowUser(
     @Arg('username') username: string,
-    @Ctx('loggedInUser') loggedInUser: User
+    @Ctx() context: ContextType
   ) {
     try {
+      const { loggedInUser, client } = context;
       const ok = await client.user.findUnique({
         where: { username },
         select: { id: true },

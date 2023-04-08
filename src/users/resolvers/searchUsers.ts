@@ -1,5 +1,5 @@
-import client from '@/client';
-import { Arg, Int, Query, Resolver } from 'type-graphql';
+import { PrismaClient } from '@prisma/client';
+import { Arg, Ctx, Int, Query, Resolver } from 'type-graphql';
 import User from '../user';
 
 @Resolver(User)
@@ -7,7 +7,8 @@ export default class SearchUsersResolver {
   @Query(() => [User])
   async searchUsers(
     @Arg('keyword') keyword: string,
-    @Arg('page', () => Int) page: number
+    @Arg('page', () => Int) page: number,
+    @Ctx('client') client: PrismaClient
   ) {
     try {
       if (!keyword) {
