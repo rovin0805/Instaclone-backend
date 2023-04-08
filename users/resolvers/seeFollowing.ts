@@ -1,5 +1,5 @@
 import client from '@/client';
-import { SeeFollowingResult } from '@/types/users/seeFolloweResult';
+import { SeeFollowingResult } from '@/types/users/seeFollowResult';
 import { Arg, Int, Query, Resolver } from 'type-graphql';
 import User from '../user';
 
