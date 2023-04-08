@@ -13,7 +13,7 @@ Instaclone Backend.
 - [x] UnFollow User
 - [x] See Followers & Following w/ Pagination
 - [x] Computed Fields
-- [ ] Search Users
+- [x] Search Users
 
 ## Photos
 

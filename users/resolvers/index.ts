@@ -8,11 +8,15 @@ import FollowUserResolvers from './followUser';
 import UnFollowUserResolvers from './unfollowUser';
 import SeeFollowersResolver from './seeFollowers';
 import SeeFollowingResolver from './seeFollowing';
+import SearchUsersResolver from './searchUsers';
 
 @Resolver(User)
 export default class UserResolver {
   // query
   seeProfileResolver = new SeeProfileResolver();
+  seeFollowersResolver = new SeeFollowersResolver();
+  seeFollowingResolver = new SeeFollowingResolver();
+  searchUsersResolver = new SearchUsersResolver();
 
   // mutation
   createAccountResolver = new CreateAccountResolver();
@@ -20,6 +24,4 @@ export default class UserResolver {
   editProfileResolver = new EditProfileResolver();
   followUserResolvers = new FollowUserResolvers();
   unfollowUserResolvers = new UnFollowUserResolvers();
-  seeFollowersResolver = new SeeFollowersResolver();
-  seeFollowingResolver = new SeeFollowingResolver();
 }
