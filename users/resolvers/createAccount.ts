@@ -7,8 +7,8 @@ import CommonResult from '@/types/common/result';
 
 @Resolver(User)
 export default class CreateAccountResolver {
-  @Mutation(() => User)
-  async createAccount(@Args() args: CreateAccountArgs): Promise<CommonResult> {
+  @Mutation(() => CommonResult)
+  async createAccount(@Args() args: CreateAccountArgs) {
     try {
       const { firstName, lastName, username, email, password } = args;
 

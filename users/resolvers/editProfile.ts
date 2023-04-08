@@ -14,7 +14,7 @@ export default class EditProfileResolver {
   async editProfile(
     @Args() args: EditProfileArgs,
     @Ctx('loggedInUser') loggedInUser: User
-  ): Promise<CommonResult> {
+  ) {
     const {
       firstName,
       lastName,

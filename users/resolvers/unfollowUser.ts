@@ -11,7 +11,7 @@ export default class UnfollowUserResolver {
   async unfollowUser(
     @Arg('username') username: string,
     @Ctx('loggedInUser') loggedInUser: User
-  ): Promise<CommonResult> {
+  ) {
     try {
       const ok = await client.user.findUnique({
         where: { username },

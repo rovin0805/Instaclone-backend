@@ -9,7 +9,7 @@ export default class SeeFollowersResolver {
   async seeFollowers(
     @Arg('username') username: string,
     @Arg('page', () => Int) page: number
-  ): Promise<SeeFollowersResult> {
+  ) {
     try {
       const ok = await client.user.findUnique({
         where: { username },

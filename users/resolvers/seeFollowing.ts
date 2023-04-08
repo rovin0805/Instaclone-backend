@@ -9,7 +9,7 @@ export default class SeeFollowingResolver {
   async seeFollowing(
     @Arg('username') username: string,
     @Arg('lastId', () => Int, { nullable: true }) lastId?: number
-  ): Promise<SeeFollowingResult> {
+  ) {
     try {
       const ok = await client.user.findUnique({
         where: { username },

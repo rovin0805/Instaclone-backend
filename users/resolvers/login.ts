@@ -11,7 +11,7 @@ export default class LoginResolver {
   async login(
     @Arg('username') username: string,
     @Arg('password') password: string
-  ): Promise<LoginResult> {
+  ) {
     const user = await client.user.findUnique({
       where: { username },
     });
