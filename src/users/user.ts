@@ -43,7 +43,7 @@ export default class User {
 
   @Field(() => Int)
   @IsInt()
-  totalFollowing(@Root() root: User): Promise<number> {
+  totalFollowing(@Root() root: User) {
     return client.user.count({
       where: {
         followers: {
@@ -55,7 +55,7 @@ export default class User {
 
   @Field(() => Int)
   @IsInt()
-  totalFollowers(@Root() root: User): Promise<number> {
+  totalFollowers(@Root() root: User) {
     return client.user.count({
       where: {
         following: {
@@ -67,7 +67,7 @@ export default class User {
 
   @Field(() => Boolean)
   @IsBoolean()
-  isMe(@Root() root: User, @Ctx('loggedInUser') loggedInUser: User): boolean {
+  isMe(@Root() root: User, @Ctx('loggedInUser') loggedInUser: User) {
     return !!loggedInUser && root.id === loggedInUser.id;
   }
 
@@ -76,7 +76,7 @@ export default class User {
   async isFollowing(
     @Root() root: User,
     @Ctx('loggedInUser') loggedInUser: User
-  ): Promise<boolean> {
+  ) {
     if (!loggedInUser) {
       return false;
     }

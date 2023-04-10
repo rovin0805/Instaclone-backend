@@ -5,7 +5,6 @@ import { Args, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql';
 import User from '../user';
 import * as bcrypt from 'bcrypt';
 import { createWriteStream } from 'fs';
-import { PrismaClient } from '@prisma/client';
 import ContextType from '@/types/common/contextType';
 
 @Resolver(User)
