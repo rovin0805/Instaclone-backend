@@ -1,4 +1,4 @@
-import Hashtags from '@/types/hashtags';
+import Hashtag from '@/types/hashtag';
 import User from '@/users/user';
 import { IsInt } from 'class-validator';
 import { Ctx, Field, ID, ObjectType, Root } from 'type-graphql';
@@ -21,7 +21,7 @@ export default class Photo {
     return client.user.findUnique({ where: { id: root.userId } });
   }
 
-  @Field(() => [Hashtags])
+  @Field(() => [Hashtag])
   hashtags(@Root() root: PrismaPhoto, @Ctx('client') client: PrismaClient) {
     return client.hashtag.findMany({
       where: {

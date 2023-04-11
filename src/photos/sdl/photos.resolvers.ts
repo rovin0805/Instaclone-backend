@@ -12,4 +12,23 @@ export default {
         },
       }),
   },
+  Hashtag: {
+    photos: ({ id }, { page }) => {
+      const SIZE = 5;
+      return client.hashtag.findUnique({ where: { id } }).photos({
+        take: SIZE,
+        skip: (page - 1) * SIZE,
+      });
+    },
+    totalPhotos: ({ id }) =>
+      client.photo.count({
+        where: {
+          hashtags: {
+            some: {
+              id,
+            },
+          },
+        },
+      }),
+  },
 };
