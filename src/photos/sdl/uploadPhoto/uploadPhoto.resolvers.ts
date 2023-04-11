@@ -1,16 +1,12 @@
 import client from '@/client';
-import { REGEX_HASHTAG } from '@/constants/regex';
+import { extractHashtags } from '@/utils/extractHashtags';
 import { protectedResolver2 } from '@/utils/protectResolver';
 
 const resolverFn = (_, { file, caption }, { loggedInUser }) => {
   try {
     let hashtagsObjs = [];
     if (caption) {
-      const hashtags = caption.match(REGEX_HASHTAG);
-      hashtagsObjs = hashtags.map((hashtag) => ({
-        where: { hashtag },
-        create: { hashtag },
-      }));
+      hashtagsObjs = extractHashtags(caption);
     }
 
     return client.photo.create({

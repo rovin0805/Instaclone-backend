@@ -1,5 +1,5 @@
-import { REGEX_HASHTAG } from '@/constants/regex';
 import ContextType from '@/types/common/contextType';
+import { extractHashtags } from '@/utils/extractHashtags';
 import { protectedResolver } from '@/utils/protectResolver';
 import { FileUpload } from 'graphql-upload';
 import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql';
@@ -20,11 +20,7 @@ export default class UploadPhotoResolver {
       let hashtagsObjs = [];
 
       if (caption) {
-        const hashtags = caption.match(REGEX_HASHTAG);
-        hashtagsObjs = hashtags.map((hashtag) => ({
-          where: { hashtag },
-          create: { hashtag },
-        }));
+        hashtagsObjs = extractHashtags(caption);
       }
 
       return client.photo.create({
