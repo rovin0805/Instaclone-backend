@@ -10,6 +10,7 @@ export default {
           },
         },
       }),
+
     totalFollowers: ({ id }) =>
       client.user.count({
         where: {
@@ -18,8 +19,10 @@ export default {
           },
         },
       }),
+
     isMe: ({ id }, _, { loggedInUser }) =>
       !!loggedInUser && id === loggedInUser.id,
+
     isFollowing: async ({ id }, _, { loggedInUser }) => {
       if (!loggedInUser) {
         return false;
@@ -35,6 +38,14 @@ export default {
         },
       });
       return !!exists;
+    },
+
+    photos: ({ id }, { page }) => {
+      const SIZE = 5;
+      return client.user.findUnique({ where: { id } }).photos({
+        take: SIZE,
+        skip: (page - 1) * SIZE,
+      });
     },
   },
 };

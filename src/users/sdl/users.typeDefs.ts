@@ -9,6 +9,7 @@ const typeDefs = gql`
     email: String!
     bio: String
     avatar: String
+    photos(page: Int!): [Photo]
     createdAt: String!
     updatedAt: String!
     following: [User]

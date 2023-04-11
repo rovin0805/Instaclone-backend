@@ -1,6 +1,8 @@
 import { IsBoolean, IsDate, IsEmail, IsInt } from 'class-validator';
-import { Ctx, Field, ID, Int, ObjectType, Root } from 'type-graphql';
+import { Arg, Ctx, Field, ID, Int, ObjectType, Root } from 'type-graphql';
 import client from '@/client';
+import Photo from '@/photos/photo';
+import { PrismaClient } from '@prisma/client';
 
 @ObjectType()
 export default class User {
@@ -91,5 +93,18 @@ export default class User {
       },
     });
     return !!exists;
+  }
+
+  @Field(() => [Photo])
+  photos(
+    @Root() root: User,
+    @Arg('page', () => Int) page: number,
+    @Ctx('client') client: PrismaClient
+  ) {
+    const SIZE = 5;
+    return client.user.findUnique({ where: { id: root.id } }).photos({
+      take: SIZE,
+      skip: (page - 1) * SIZE,
+    });
   }
 }
