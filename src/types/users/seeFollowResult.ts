@@ -1,4 +1,4 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, Int, ObjectType } from 'type-graphql';
 import CommonResult from '../common/result';
 import User from '@/users/user';
 import { User as PrismaUser } from '@prisma/client';
@@ -8,7 +8,7 @@ export class SeeFollowersResult extends CommonResult {
   @Field(() => [User], { nullable: true })
   followers?: PrismaUser[];
 
-  @Field(() => Number, { nullable: true })
+  @Field(() => Int, { nullable: true })
   totalPages?: number;
 }
 
@@ -17,6 +17,6 @@ export class SeeFollowingResult extends CommonResult {
   @Field(() => [User], { nullable: true })
   following?: PrismaUser[];
 
-  @Field(() => Number, { nullable: true })
+  @Field(() => Int, { nullable: true })
   totalPages?: number;
 }

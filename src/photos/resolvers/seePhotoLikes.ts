@@ -1,11 +1,26 @@
-import { Arg, Ctx, Int, Query, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Ctx,
+  Field,
+  Int,
+  ObjectType,
+  Query,
+  Resolver,
+} from 'type-graphql';
 import Photo from '../photo';
 import User from '@/users/user';
 import { PrismaClient } from '@prisma/client';
+import CommonResult from '@/types/common/result';
+
+@ObjectType()
+class SeePhotoLikesResult extends CommonResult {
+  @Field(() => [User], { nullable: true })
+  users?: User[];
+}
 
 @Resolver(Photo)
 export default class SeePhotoLikesResolver {
-  @Query(() => [User])
+  @Query(() => SeePhotoLikesResult)
   async seePhotoLikes(
     @Arg('id', () => Int) id: number,
     @Ctx('client') client: PrismaClient
@@ -15,7 +30,11 @@ export default class SeePhotoLikesResolver {
         where: { photoId: id },
         select: { user: true },
       });
-      return likes.map((like) => like.user);
+      const users = likes.map((like) => like.user);
+      return {
+        ok: true,
+        users,
+      };
     } catch (err) {
       return {
         ok: false,

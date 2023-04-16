@@ -1,10 +1,25 @@
 import { PrismaClient } from '@prisma/client';
-import { Arg, Ctx, Int, Query, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Ctx,
+  Field,
+  Int,
+  ObjectType,
+  Query,
+  Resolver,
+} from 'type-graphql';
 import User from '../user';
+import CommonResult from '@/types/common/result';
+
+@ObjectType()
+class SearchUsersResult extends CommonResult {
+  @Field(() => [User], { nullable: true })
+  users?: User[];
+}
 
 @Resolver(User)
 export default class SearchUsersResolver {
-  @Query(() => [User])
+  @Query(() => SearchUsersResult)
   async searchUsers(
     @Arg('keyword') keyword: string,
     @Arg('page', () => Int) page: number,
@@ -12,10 +27,13 @@ export default class SearchUsersResolver {
   ) {
     try {
       if (!keyword) {
-        return [];
+        return {
+          ok: true,
+          users: [],
+        };
       }
       const SIZE = 5;
-      return client.user.findMany({
+      const users = await client.user.findMany({
         where: {
           username: {
             startsWith: keyword.toLowerCase(),
@@ -24,10 +42,14 @@ export default class SearchUsersResolver {
         take: SIZE,
         skip: (page - 1) * SIZE,
       });
+      return {
+        ok: true,
+        users,
+      };
     } catch (err) {
       return {
         ok: false,
-        error: "Can't find users",
+        error: "Can't search the users",
       };
     }
   }

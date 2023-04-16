@@ -1,18 +1,37 @@
 import { PrismaClient } from '@prisma/client';
-import { Arg, Ctx, Int, Query, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Ctx,
+  Field,
+  Int,
+  ObjectType,
+  Query,
+  Resolver,
+} from 'type-graphql';
 import Photo from '../photo';
+import CommonResult from '@/types/common/result';
+
+@ObjectType()
+class SeePhotoResult extends CommonResult {
+  @Field(() => Photo, { nullable: true })
+  photo?: Photo;
+}
 
 @Resolver(Photo)
 export default class SeePhoto {
-  @Query(() => Photo, { nullable: true })
-  seePhoto(
+  @Query(() => SeePhotoResult)
+  async seePhoto(
     @Arg('id', () => Int) id: number,
     @Ctx('client') client: PrismaClient
   ) {
     try {
-      return client.photo.findUnique({
+      const photo = await client.photo.findUnique({
         where: { id },
       });
+      return {
+        ok: true,
+        photo,
+      };
     } catch (err) {
       return {
         ok: false,

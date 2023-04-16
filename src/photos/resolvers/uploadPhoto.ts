@@ -2,14 +2,29 @@ import ContextType from '@/types/common/contextType';
 import { extractHashtags } from '@/utils/extractHashtags';
 import { protectedResolver } from '@/utils/protectResolver';
 import { FileUpload } from 'graphql-upload';
-import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql';
+import {
+  Arg,
+  Ctx,
+  Field,
+  Mutation,
+  ObjectType,
+  Resolver,
+  UseMiddleware,
+} from 'type-graphql';
 import Photo from '../photo';
+import CommonResult from '@/types/common/result';
+
+@ObjectType()
+class UploadPhotoResult extends CommonResult {
+  @Field(() => Photo, { nullable: true })
+  photo?: Photo;
+}
 
 @Resolver(Photo)
 export default class UploadPhotoResolver {
-  @Mutation(() => Photo)
+  @Mutation(() => UploadPhotoResult)
   @UseMiddleware(protectedResolver)
-  uploadPhoto(
+  async uploadPhoto(
     @Ctx() context: ContextType,
     // @Arg('file') file: Promise<FileUpload>,
     @Arg('file') file: string,
@@ -23,7 +38,7 @@ export default class UploadPhotoResolver {
         hashtagsObjs = extractHashtags(caption);
       }
 
-      return client.photo.create({
+      const photo = await client.photo.create({
         data: {
           file,
           caption,
@@ -39,10 +54,15 @@ export default class UploadPhotoResolver {
           }),
         },
       });
+
+      return {
+        ok: true,
+        photo,
+      };
     } catch (err) {
       return {
         ok: false,
-        error: "Can't upload a photo",
+        error: "Can't upload the photo",
       };
     }
   }
