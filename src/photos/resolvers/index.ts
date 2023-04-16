@@ -5,6 +5,7 @@ import UploadPhotoResolver from './uploadPhoto';
 import SeeHashtagResolver from './seeHashtag';
 import SearchPhotosResolver from './searchPhotos';
 import EditPhotoResolver from './editPhoto';
+import ToggleLikePhotoResolver from './toggleLikePhoto';
 
 @Resolver(Photo)
 export default class PhotoResolver {
@@ -16,4 +17,5 @@ export default class PhotoResolver {
   // mutation
   uploadPhotoResolver = new UploadPhotoResolver();
   editPhotoResolver = new EditPhotoResolver();
+  toggleLikePhotoResolver = new ToggleLikePhotoResolver();
 }
