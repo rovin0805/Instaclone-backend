@@ -1,6 +1,6 @@
 import Hashtag from '@/types/hashtag';
 import User from '@/users/user';
-import { IsInt } from 'class-validator';
+import { IsBoolean, IsInt } from 'class-validator';
 import { Ctx, Field, ID, Int, ObjectType, Root } from 'type-graphql';
 import { Photo as PrismaPhoto, PrismaClient } from '@prisma/client';
 
@@ -35,5 +35,11 @@ export default class Photo {
   @Field(() => Int)
   likes(@Root() root: PrismaPhoto, @Ctx('client') client: PrismaClient) {
     return client.like.count({ where: { photoId: root.id } });
+  }
+
+  @Field(() => Boolean)
+  @IsBoolean()
+  isMe(@Root() root: PrismaPhoto, @Ctx('loggedInUser') loggedInUser: User) {
+    return !!loggedInUser && root.userId === loggedInUser.id;
   }
 }

@@ -3,7 +3,10 @@ import { protectedResolver2 } from '@/utils/protectResolver';
 
 const resolverFn = async (_, { id }, { loggedInUser }) => {
   try {
-    const ok = await client.photo.findUnique({ where: { id } });
+    const ok = await client.photo.findUnique({
+      where: { id },
+      select: { id: true },
+    });
 
     if (!ok) {
       return {

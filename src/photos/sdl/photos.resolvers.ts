@@ -12,6 +12,8 @@ export default {
         },
       }),
     likes: ({ id }) => client.like.count({ where: { photoId: id } }),
+    isMe: ({ userId }, _, { loggedInUser }) =>
+      !!loggedInUser && userId === loggedInUser.id,
   },
   Hashtag: {
     photos: ({ id }, { page }) => {

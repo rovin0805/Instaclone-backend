@@ -14,7 +14,10 @@ export default class ToggleLikePhotoResolver {
   ) {
     try {
       const { client, loggedInUser } = context;
-      const ok = await client.photo.findUnique({ where: { id } });
+      const ok = await client.photo.findUnique({
+        where: { id },
+        select: { id: true },
+      });
 
       if (!ok) {
         return {
