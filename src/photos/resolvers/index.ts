@@ -8,6 +8,7 @@ import EditPhotoResolver from './editPhoto';
 import ToggleLikePhotoResolver from './toggleLikePhoto';
 import SeePhotoLikesResolver from './seePhotoLikes';
 import SeeFeedResolver from './seeFeed';
+import SeePhotoComments from './seePhotoComments';
 
 @Resolver(Photo)
 export default class PhotoResolver {
@@ -17,6 +18,7 @@ export default class PhotoResolver {
   searchPhotosResolver = new SearchPhotosResolver();
   seePhotoLikesResolver = new SeePhotoLikesResolver();
   seeFeedResolver = new SeeFeedResolver();
+  seePhotoComments = new SeePhotoComments();
 
   // mutation
   uploadPhotoResolver = new UploadPhotoResolver();

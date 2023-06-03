@@ -33,8 +33,16 @@ export default class Photo {
   }
 
   @Field(() => Int)
-  likes(@Root() root: PrismaPhoto, @Ctx('client') client: PrismaClient) {
+  likesCount(@Root() root: PrismaPhoto, @Ctx('client') client: PrismaClient) {
     return client.like.count({ where: { photoId: root.id } });
+  }
+
+  @Field(() => Int)
+  commentsCount(
+    @Root() root: PrismaPhoto,
+    @Ctx('client') client: PrismaClient
+  ) {
+    return client.comment.count({ where: { photoId: root.id } });
   }
 
   @Field(() => Boolean)

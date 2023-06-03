@@ -25,8 +25,8 @@ Instaclone Backend.
 - [x] Like / Unlike Photo
 - [x] See Photo Likes
 - [x] See Feed
-- [ ] See Photo Comments
-- [ ] Is Me (To Delete Photo)
+- [x] See Photo Comments
+- [x] Is Me (To Delete Photo)
 
 ## Comments
 
@@ -36,4 +36,4 @@ Instaclone Backend.
 
 ## Extras
 
-- [ ] S# Image Upload
+- [ ] S3 Image Upload

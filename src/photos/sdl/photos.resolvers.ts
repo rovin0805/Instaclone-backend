@@ -11,7 +11,8 @@ export default {
           },
         },
       }),
-    likes: ({ id }) => client.like.count({ where: { photoId: id } }),
+    likesCount: ({ id }) => client.like.count({ where: { photoId: id } }),
+    commentsCount: ({ id }) => client.comment.count({ where: { photoId: id } }),
     isMe: ({ userId }, _, { loggedInUser }) =>
       !!loggedInUser && userId === loggedInUser.id,
   },
