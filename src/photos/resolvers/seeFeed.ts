@@ -6,10 +6,12 @@ import {
   ObjectType,
   Query,
   Resolver,
+  UseMiddleware,
 } from 'type-graphql';
 import Photo from '../photo';
 import CommonResult from '@/types/common/result';
 import ContextType from '@/types/common/contextType';
+import { protectedResolver } from '@/utils/protectResolver';
 
 @ObjectType()
 class SeeFeedResult extends CommonResult {
@@ -20,6 +22,7 @@ class SeeFeedResult extends CommonResult {
 @Resolver(Photo)
 export default class SeeFeedResolver {
   @Query(() => SeeFeedResult)
+  @UseMiddleware(protectedResolver)
   async seeFeed(
     @Arg('page', () => Int) page: number,
     @Ctx() context: ContextType
