@@ -9,6 +9,7 @@ import ToggleLikePhotoResolver from './toggleLikePhoto';
 import SeePhotoLikesResolver from './seePhotoLikes';
 import SeeFeedResolver from './seeFeed';
 import SeePhotoComments from './seePhotoComments';
+import DeletePhotoResolver from './deletePhoto';
 
 @Resolver(Photo)
 export default class PhotoResolver {
@@ -24,4 +25,5 @@ export default class PhotoResolver {
   uploadPhotoResolver = new UploadPhotoResolver();
   editPhotoResolver = new EditPhotoResolver();
   toggleLikePhotoResolver = new ToggleLikePhotoResolver();
+  deletePhotoResolver = new DeletePhotoResolver();
 }
